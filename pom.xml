@@ -33,7 +33,7 @@
   <artifactId>xwiki-batchimport-sharepointblog</artifactId>
   <packaging>xar</packaging>
   <name>BatchImport Sharepoint Blog Extension</name>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <description>BatchImport extension allowing to import Sharepoint Blog exports.</description>
   <developers>
     <developer>
