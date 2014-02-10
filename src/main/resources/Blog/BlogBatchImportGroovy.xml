@@ -1,0 +1,707 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xwikidoc>
+<web>Blog</web>
+<name>BlogBatchImportGroovy</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent>Blog.BlogBatchImport</parent>
+<creator>xwiki:XWiki.Admin</creator>
+<author>xwiki:XWiki.Admin</author>
+<customClass></customClass>
+<contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+<creationDate>1388530800000</creationDate>
+<date>1388530800000</date>
+<contentUpdateDate>1388530800000</contentUpdateDate>
+<version>1.1</version>
+<title>Blog Batch Import Groovy Script</title>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<minorEdit>false</minorEdit>
+<syntaxId>xwiki/2.1</syntaxId>
+<hidden>false</hidden>
+<content>/**
+ Batch Import Script allowing to import Sharepoint blog exports.
+ 
+ Developed by Ludovic Dubost, XWiki SAS
+ for Energisa.
+
+ Licence: LGPL
+
+ **/
+import org.xwiki.component.descriptor.*;
+import org.xwiki.batchimport.internal.*;
+import org.xwiki.batchimport.*
+import com.xpn.xwiki.doc.*;
+import com.xpn.xwiki.*;
+import com.xpn.xwiki.api.Context;
+import com.xpn.xwiki.api.Document;
+import com.xpn.xwiki.web.*;
+import org.xwiki.script.service.ScriptService;
+import org.xwiki.xml.html.*;
+import java.util.zip.ZipFile;
+import org.xwiki.model.reference.*;
+import org.apache.commons.io.FileUtils;
+import org.xwiki.batchimport.log.BatchImportLog;
+import java.util.zip.ZipException;
+import org.xwiki.officeimporter.OfficeImporterException;
+import org.xwiki.officeimporter.OfficeImporterVelocityBridge;
+import org.xwiki.officeimporter.document.XDOMOfficeDocument;
+import org.apache.commons.lang.StringUtils;
+import com.xpn.xwiki.plugin.image.ImageProcessor;
+import java.io.*;
+import com.xpn.xwiki.objects.*;
+import com.xpn.xwiki.objects.classes.*;
+import java.text.*;
+import org.xwiki.batchimport.BatchImportConfiguration.Overwrite;
+import org.xwiki.component.manager.ComponentLookupException;
+import org.xwiki.batchimport.log.AbstractSavedDocumentsBatchImportLog;
+
+
+public class BatchImportGroovy extends DefaultBatchImport {
+
+ // THINGS TO CONFIGURE ARE HERE
+ // name of categorie field
+ def CATEGORY = "Categoria"
+
+ // prefix for files and images
+ def PREFIX = "prefix"
+
+ def WEBSITEURL = "http://blogbatchimport.xwiki.org"
+
+ // END THINGS TO CONFIGURE
+
+ public localXWikiContext = null;
+
+ public setLocalContext(xcontext) {
+   this.localXWikiContext = xcontext;
+ }
+
+public getFileInputStream(filename) {
+  return new FileInputStream(new File(filename));
+}
+
+public com.xpn.xwiki.XWikiContext getXWikiContext() {
+    if (localXWikiContext==null)
+     return super.getXWikiContext();
+    else
+     return localXWikiContext;
+}
+
+public getWikiSyntax(String notesId, String html, Map&lt;String, String&gt; data) {
+   try {
+    // clean HTML to get XHTML that we can use in XmlParser
+    def cleaner = Utils.getComponent(org.xwiki.xml.html.HTMLCleaner.class)
+    // def cleaner = Utils.getComponent(org.xwiki.xml.html.HTMLCleaner.class, "openoffice")
+    def wdoc = cleaner.clean(new StringReader(html));
+    def html2 = HTMLUtils.toString(wdoc, true, true);
+    def renderingService = Utils.getComponent(ScriptService.class, 'rendering')
+    def xdomBlock = renderingService.parse(html2, "xhtml/1.0")
+
+    def wikisyntax = renderingService.render(xdomBlock, "xwiki/2.1");
+
+    if (wikisyntax==null) {
+      cleaner = Utils.getComponent(org.xwiki.xml.html.HTMLCleaner.class)
+      wdoc = cleaner.clean(new StringReader(html));
+      html2 = HTMLUtils.toString(wdoc, true, true);
+      xdomBlock = renderingService.parse(html2, "xhtml/1.0")
+      wikisyntax = renderingService.render(xdomBlock, "xwiki/2.1");
+    }
+    // last manipulation to add the attach keyword for attachment links to work
+
+    def xcontext = getXWikiContext();
+    def doc = new Document((xcontext==null) ? null : xcontext.getDoc(), xcontext);  
+    def datadir = doc.getValue("datafilename") + "/files/" + notesId + "/";
+    def datadirprefix = "";
+
+    // clean bad Ed links
+    // wikisyntax = wikisyntax.replaceAll(/\[\[url:Ed(.*?)\]\]/, "")
+    // clean some mailto links which are bad
+    wikisyntax = wikisyntax.replaceAll("path:mailto:", "mailto:")
+
+    System.out.println("BATCHIMPORT: converting: " + wikisyntax);
+
+   wikisyntax = wikisyntax.replaceAll(/\[\[([^\]]*?)&gt;&gt;([^\]]*?:\/[^\]]*?)\]\]/, {
+      // we are new looking at the links part
+      def linkName = it[2];
+      def textPart = it[1];
+      def newName = ""
+      def index = linkName.lastIndexOf("/");
+      def fileName = linkName.substring(index + 1).replaceAll("%20", " ");;
+ 
+      if (linkName.contains(PREFIX)) {
+        if (linkName.startsWith("attach:")) {
+          System.out.println("BATCHIMPORT: regex 1 found attach link " + linkName);
+          newName = linkName.replaceAll("attach:/" + PREFIX + "/","").replaceAll("%20", " ")
+          String value = data.get("doc.file")
+          if (value=="")
+            value = newName;
+          else
+            value+= "," + newName
+         data.put("doc.file", value);
+         if (newName!="")
+          return "[[attach:" + fileName + "]]";
+        }
+
+        if (linkName.startsWith("path:")) {
+          System.out.println("BATCHIMPORT: found attach link " + linkName);
+          newName = linkName.replaceAll("path:/" + PREFIX + "/","").replaceAll("%20", " ")
+          String value = data.get("doc.file")
+          if (value=="")
+            value = newName;
+          else
+            value+= "," + newName
+         data.put("doc.file", value);
+         if (newName!="")
+           return "[[attach:" + fileName + "]]";
+         }
+      } else {
+
+      if (linkName.startsWith("attach:")) {
+          System.out.println("BATCHIMPORT: regex 1 found attach link " + linkName);
+          newName = linkName.replaceAll("attach:/Documents","").replaceAll("%20", " ");
+         if (newName!="")
+          return "[[${textPart}&gt;&gt;url:" + WEBSITEURL + linkName + "]]";
+   
+      }
+
+     if (linkName.startsWith("path:")) {
+         System.out.println("BATCHIMPORT: regex 1 found attach link " + linkName);
+         newName = linkName.replaceAll("path:/Documents","").replaceAll("%20", " ") ;
+         if (newName!="")
+           return "[[${textPart}&gt;&gt;url:" + WEBSITEURL + linkName.replaceAll("path:", "") + "]]";
+         }
+      }
+
+      return it[0];
+    });
+
+    wikisyntax = wikisyntax.replaceAll(/\[\[([^\]]*?:\/[^\]]*?)\]\]/, {
+      // we are new looking at the links part
+      def linkName = it[1];
+
+      if (linkName.contains("||"))
+        return it[0];
+
+      def newName = ""
+      def index = linkName.lastIndexOf("/");
+      def fileName = linkName.substring(index + 1).replaceAll("%20", " ");
+  
+      if (linkName.startsWith("image:")) {
+          System.out.println("BATCHIMPORT: regex 2 found image link " + linkName);
+          newName = linkName.replaceAll("image:/" + PREFIX + "/","").replaceAll("%20", " ")
+          String value = data.get("doc.file")
+          if (value=="")
+            value = newName;
+          else
+            value+= "," + newName
+         data.put("doc.file", value);
+         if (newName!="")
+          return "[[image:" + fileName + "]]";
+      }
+
+      if (linkName.startsWith("attach:")) {
+          System.out.println("BATCHIMPORT: regex 2 found attach link " + linkName);
+          newName = linkName.replaceAll("attach:/" + PREFIX + "/","").replaceAll("%20", " ")
+          String value = data.get("doc.file")
+          if (value=="")
+            value = newName;
+          else
+            value+= "," + newName
+         data.put("doc.file", value);
+         if (newName!="")
+          return "[[attach:" + fileName + "]]";
+   
+      }
+
+     if (linkName.startsWith("path:")) {
+          System.out.println("BATCHIMPORT: regex 2 found attach link " + linkName);
+          newName = linkName.replaceAll("path:/" + PREFIX + "/","").replaceAll("%20", " ")
+          String value = data.get("doc.file")
+          if (value=="")
+            value = newName;
+          else
+            value+= "," + newName
+         data.put("doc.file", value);
+         if (newName!="")
+           return "[[attach:" + fileName + "]]";
+         }
+
+      return it[0];
+    });
+
+    wikisyntax = wikisyntax.replaceAll(/\[\[([^\]]*?:\/[^\]]*?)\|\|([^\]]*)\]\]/, {
+      // we are new looking at the links part
+      def linkName = it[1];
+      def altPart = it[2];
+      def newName = ""
+      def index = linkName.lastIndexOf("/");
+      def fileName = linkName.substring(index + 1).replaceAll("%20", " ");
+ 
+      if (linkName.startsWith("image:")) {
+          System.out.println("BATCHIMPORT: regex 3 found image link " + linkName);
+          newName = linkName.replaceAll("image:/" + PREFIX + "/","").replaceAll("%20", " ")
+          String value = data.get("doc.file")
+          if (value=="")
+            value = newName;
+          else
+            value+= "," + newName
+         data.put("doc.file", value);
+         if (newName!="")
+          return "[[image:" + fileName + "||" + altPart + "]]";
+      }
+
+      if (linkName.startsWith("attach:")) {
+          System.out.println("BATCHIMPORT: regex 3 found attach link " + linkName);
+          newName = linkName.replaceAll("attach:/" + PREFIX + "/","").replaceAll("%20", " ")
+          String value = data.get("doc.file")
+          if (value=="")
+            value = newName;
+          else
+            value+= "," + newName
+         data.put("doc.file", value);
+         if (newName!="")
+          return "[[attach:" + fileName + "]]";
+   
+      }
+
+     if (linkName.startsWith("path:")) {
+          System.out.println("BATCHIMPORT: regex 3 found attach link " + linkName);
+          newName = linkName.replaceAll("path:/" + PREFIX + "/","").replaceAll("%20", " ")
+          String value = data.get("doc.file")
+          if (value=="")
+            value = newName;
+          else
+            value+= "," + newName
+         data.put("doc.file", value);
+         if (newName!="")
+           return "[[attach:" + fileName + "]]";
+         }
+
+      return it[0];
+    });
+
+    return wikisyntax;
+
+    /*
+    return wikisyntax.replaceAll(/\[\[(.*)&gt;&gt;(.*)\]\]/, {
+      // we are new looking at the links part
+      def newName = it[2];
+      def textPart = it[1];
+ 
+      System.out.println("BATCHIMPORT: checking TEXT: " + textPart + " LINK: " + newName);
+
+      if (newName.startsWith("url:"))
+       newName = newName.substring(4);
+
+      if (newName.startsWith("file:")) {
+        newName = newName.substring(5);
+        if (!newName.contains("@")) {
+          def fileName = newName;
+          def i2 = fileName.indexOf("||");
+          if (fileName.startsWith("#")) {
+            def anchor = fileName.toString().substring(1);
+            newName = """||anchor='${anchor}'""";
+          } else if (i2==-1)  {        
+            newName = "attach:" + cleanName(fileName);
+          } else {
+            def fileName2 = fileName.substring(0, i2);
+            def target = fileName.substring(i2+2);
+            newName = "attach:" + cleanName(fileName2.trim()) + "||" + target;
+          }
+        } else {
+          def i1 = newName.indexOf("@");
+          def pageName = newName.substring(0, i1);
+          def fileName = newName.substring(i1+1);
+          def i2 = fileName.indexOf("||");
+          if (i2==-1) {
+           newName = "attach:" + pageName.trim() + "@" + cleanName(fileName.trim());
+          } else {
+            def fileName2 = fileName.substring(0, i2);
+            def target = fileName.substring(i2+2);
+            newName = "attach:" + pageName.trim() + "@" + cleanName(fileName2.trim()) + "||" + target;
+     
+          }
+        }
+      }
+
+      if (newName == "attach:")
+       newName = "";
+
+      // let's start by looking at the text/image part
+      System.out.println("BATCHIMPORT: checking " + it[0] + " TEXT: " + textPart + " LINK: " + newName);
+      if (textPart.startsWith("[[image:")) {
+         textPart = textPart.replaceAll(/\[\[image:([0-9]+.gif)\]\]/, {
+           System.out.println("BATCHIMPORT: found image " + it[1]);
+           def filename = it[1];
+           def height = getAttachmentHeight(datadir, datadirprefix, filename);
+           if (height&lt;50) {
+             System.out.println("BATCHIMPORT: image is smaller than 50px");
+             return "";
+           } else {
+             return it[0];
+           }
+         });
+      }
+
+      def result = ""
+      
+      if (newName == "" &amp;&amp; textPart == "")
+       result = ""
+      else if (newName=="")
+       result = textPart; 
+      else if (textPart == "")
+       result = "[[" + newName + "]]\n"; 
+      else
+       result = "[[" + textPart + "&gt;&gt;" +  newName + "]]\n"; 
+       System.out.println("BATCHIMPORT: transformed link to " + result);
+       return result;
+     });
+     */
+
+   } catch (Throwable e) {
+     System.out.println("BATCHIMPORT: failed to convert html with error " + e.getMessage() + " : " + html);
+     e.printStackTrace();
+     return html;
+   }
+ }
+
+
+public String cleanName(String name)
+    {
+        String temp = name;
+        temp =
+            temp.replaceAll(
+                "[\u00c0\u00c1\u00c2\u00c3\u00c4\u00c5\u0100\u0102\u0104\u01cd\u01de\u01e0\u01fa\u0200\u0202\u0226]",
+                "A");
+        temp =
+            temp.replaceAll(
+                "[\u00e0\u00e1\u00e2\u00e3\u00e4\u00e5\u0101\u0103\u0105\u01ce\u01df\u01e1\u01fb\u0201\u0203\u0227]",
+                "a");
+        temp = temp.replaceAll("[\u00c6\u01e2\u01fc]", "AE");
+        temp = temp.replaceAll("[\u00e6\u01e3\u01fd]", "ae");
+        temp = temp.replaceAll("[\u008c\u0152]", "OE");
+        temp = temp.replaceAll("[\u009c\u0153]", "oe");
+        temp = temp.replaceAll("[\u00c7\u0106\u0108\u010a\u010c]", "C");
+        temp = temp.replaceAll("[\u00e7\u0107\u0109\u010b\u010d]", "c");
+        temp = temp.replaceAll("[\u00d0\u010e\u0110]", "D");
+        temp = temp.replaceAll("[\u00f0\u010f\u0111]", "d");
+        temp = temp.replaceAll("[\u00c8\u00c9\u00ca\u00cb\u0112\u0114\u0116\u0118\u011a\u0204\u0206\u0228]", "E");
+        temp = temp.replaceAll("[\u00e8\u00e9\u00ea\u00eb\u0113\u0115\u0117\u0119\u011b\u01dd\u0205\u0207\u0229]", "e");
+        temp = temp.replaceAll("[\u011c\u011e\u0120\u0122\u01e4\u01e6\u01f4]", "G");
+        temp = temp.replaceAll("[\u011d\u011f\u0121\u0123\u01e5\u01e7\u01f5]", "g");
+        temp = temp.replaceAll("[\u0124\u0126\u021e]", "H");
+        temp = temp.replaceAll("[\u0125\u0127\u021f]", "h");
+        temp = temp.replaceAll("[\u00cc\u00cd\u00ce\u00cf\u0128\u012a\u012c\u012e\u0130\u01cf\u0208\u020a]", "I");
+        temp = temp.replaceAll("[\u00ec\u00ed\u00ee\u00ef\u0129\u012b\u012d\u012f\u0131\u01d0\u0209\u020b]", "i");
+        temp = temp.replaceAll("[\u0132]", "IJ");
+        temp = temp.replaceAll("[\u0133]", "ij");
+        temp = temp.replaceAll("[\u0134]", "J");
+        temp = temp.replaceAll("[\u0135]", "j");
+        temp = temp.replaceAll("[\u0136\u01e8]", "K");
+        temp = temp.replaceAll("[\u0137\u0138\u01e9]", "k");
+        temp = temp.replaceAll("[\u0139\u013b\u013d\u013f\u0141]", "L");
+        temp = temp.replaceAll("[\u013a\u013c\u013e\u0140\u0142\u0234]", "l");
+        temp = temp.replaceAll("[\u00d1\u0143\u0145\u0147\u014a\u01f8]", "N");
+        temp = temp.replaceAll("[\u00f1\u0144\u0146\u0148\u0149\u014b\u01f9\u0235]", "n");
+        temp =
+            temp.replaceAll(
+                "[\u00d2\u00d3\u00d4\u00d5\u00d6\u00d8\u014c\u014e\u0150\u01d1\u01ea\u01ec\u01fe\u020c\u020e\u022a\u022c"
+                    + "\u022e\u0230]", "O");
+        temp =
+            temp.replaceAll(
+                "[\u00f2\u00f3\u00f4\u00f5\u00f6\u00f8\u014d\u014f\u0151\u01d2\u01eb\u01ed\u01ff\u020d\u020f\u022b\u022d"
+                    + "\u022f\u0231]", "o");
+        temp = temp.replaceAll("[\u0156\u0158\u0210\u0212]", "R");
+        temp = temp.replaceAll("[\u0157\u0159\u0211\u0213]", "r");
+        temp = temp.replaceAll("[\u015a\u015c\u015e\u0160\u0218]", "S");
+        temp = temp.replaceAll("[\u015b\u015d\u015f\u0161\u0219]", "s");
+        temp = temp.replaceAll("[\u00de\u0162\u0164\u0166\u021a]", "T");
+        temp = temp.replaceAll("[\u00fe\u0163\u0165\u0167\u021b\u0236]", "t");
+        temp =
+            temp.replaceAll(
+                "[\u00d9\u00da\u00db\u00dc\u0168\u016a\u016c\u016e\u0170\u0172\u01d3\u01d5\u01d7\u01d9\u01db\u0214\u0216]",
+                "U");
+        temp =
+            temp.replaceAll(
+                "[\u00f9\u00fa\u00fb\u00fc\u0169\u016b\u016d\u016f\u0171\u0173\u01d4\u01d6\u01d8\u01da\u01dc\u0215\u0217]",
+                "u");
+        temp = temp.replaceAll("[\u0174]", "W");
+        temp = temp.replaceAll("[\u0175]", "w");
+        temp = temp.replaceAll("[\u00dd\u0176\u0178\u0232]", "Y");
+        temp = temp.replaceAll("[\u00fd\u00ff\u0177\u0233]", "y");
+        temp = temp.replaceAll("[\u0179\u017b\u017d]", "Z");
+        temp = temp.replaceAll("[\u017a\u017c\u017e]", "z");
+        temp = temp.replaceAll("[\u00df]", "SS");
+        temp = temp.replaceAll("[':;\\\\/]", " ");
+        name = temp;
+        name = name.replaceAll("[\\(\\)]", " ");
+        name = name.replaceAll("[^a-zA-Z0-9\\s\\-_\\.]", "");
+        name = name.replaceAll("  ", " ").trim();
+
+        // if the file is word or rtf we convert it to pdf
+        if (name.toLowerCase().endsWith(".doc")||name.toLowerCase().endsWith(".rtf")||name.toLowerCase().endsWith(".docx")) {
+          name = name.substring(0, name.length()-4) + ".pdf"
+        }
+        return name;
+    }
+
+ public init() {
+  return init(null);
+ }
+ public init(cm) {
+    def str = "";
+    if (cm == null)
+     cm = Utils.getComponentManager();
+    DefaultComponentDescriptor descriptor = new DefaultComponentDescriptor(implementation: this.class, role: BatchImport.class, roleHint: 'default');
+    // get all the deps from the existing component and add them to this component
+    def impls = cm.getComponentDescriptorList(BatchImport.class);
+    for (impl in impls) {
+      if (impl.getImplementation().name.equals("BatchImportGroovy") || impl.getImplementation().name.equals("org.xwiki.batchimport.internal.DefaultBatchImport")) {
+        for(dependency in impl.getComponentDependencies()) {
+          descriptor.addComponentDependency(dependency);
+          str += "dep: " + dependency;
+        }
+      }
+    }
+
+    cm.unregisterComponent(BatchImport.class, 'default');
+    cm.registerComponent(descriptor);
+    
+    return "descriptor: " + descriptor + "deps: " + str + " class name " + this.class.name;
+  }
+  
+public List&lt;String&gt; getColumnHeaders(BatchImportConfiguration config) throws IOException {
+        // get an iterator from the config and reset its file
+        ImportFileIterator iterator = null;
+        try {
+            iterator = getImportFileIterator(config);
+        } catch (Throwable e) {
+            throw new IOException("Could not find an import file reader for the configuration: " + config.toString(), e);
+        }
+        iterator.resetFile(config);
+
+        // and pass it to the internal function
+        def headers = getColumnHeaders(iterator, config.hasHeaderRow());
+
+        headers.add("FILES");
+        // headers.add("Constant:1");
+        return headers;
+}
+
+private String getConvertedValue(String notesId, String value, Map&lt;String, String&gt; data) {
+  if (value.contains("&lt;div")||value.contains("&lt;br")||value.contains("&lt;a href")) {
+    return getWikiSyntax(notesId, value.replaceAll(".x000D.", ""), data);
+  } else {
+    return value;
+  }
+}
+
+public Map&lt;String, String&gt; getData(List&lt;String&gt; row, Map&lt;String, String&gt; mapping, List&lt;String&gt; headers) {
+     System.out.println("BATCHIMPORT: in getData");
+    // this map seems to be like xwiki field -&gt; value
+        Map&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();
+        // TODO: in the original code, a test was made here for the first cell in the row, to check if it has content,
+        // why?
+      
+        // we will need the notesId so that we can find the attached files
+        def notesId = row.get(0);  
+
+        // get the fields in the mapping
+        map.put("doc.file", "");
+
+        for (Map.Entry&lt;String, String&gt; fieldMapping : mapping.entrySet()) {
+            String xwikiField = fieldMapping.getKey();
+            String header = fieldMapping.getValue();
+
+            def value = "";
+            int valueIndex = headers.indexOf(header);
+            if (valueIndex &gt;= 0 &amp;&amp; valueIndex &lt; row.size()) {
+                if (header==CATEGORY) {
+                  value = "Blog." + row.get(valueIndex);
+                } else if (row.get(valueIndex) instanceof String) {
+                  value = getConvertedValue(notesId, row.get(valueIndex).trim(), map);
+                } else {
+                  value = row.get(valueIndex);
+                }
+            }
+            if (!xwikiField.equals("doc.file"))
+             map.put(xwikiField, value);
+        }
+
+System.out.println("Final map: " + map);
+
+        return map;
+}
+
+@SuppressWarnings("deprecation")
+    public void addFile(Document newDoc, byte[] filedata, String filename)
+    {
+        try {
+            if (filename.startsWith("./")) {
+                filename = filename.substring(2);
+            }
+            XWikiContext xcontext = getXWikiContext();
+            // we should not do that here because we already cleaned before
+            // filename = xcontext.getWiki().clearName(filename, false, true, xcontext);
+
+            XWikiAttachment attachment = new XWikiAttachment();
+            // we try to convert the document to pdf if it's a doc, docx or rtd
+            if (filename.toLowerCase().endsWith(".doc")||filename.toLowerCase().endsWith(".rtf")||filename.toLowerCase().endsWith(".docx")) {
+              try {
+               attachment.setFilename(filename.substring(0, filename.length()-4) + ".pdf");
+               attachment.setContent(convertToPDF(filedata));
+              } catch (Throwable e) {
+               System.out.println("Failed to convert " + filename + " to pdf");
+               attachment.setContent(filedata);
+               attachment.setFilename(filename);
+               e.printStackTrace();
+              }
+            } else {
+             attachment.setContent(filedata);
+             attachment.setFilename(filename);
+            }
+
+            String finalFilename = attachment.getFilename();
+            if (newDoc.getAttachment(finalFilename) != null) {
+                debug("Filename " + finalFilename + " already exists in " + newDoc.getPrefixedFullName() + ".");
+                return;
+            }
+
+            // this is saving the document at this point. I don't know if it was like this when the code was written,
+            // but now it's like this.
+            // WARNING: this will work only if the performer of the import has programming rights.
+            XWikiDocument protectedDocument = newDoc.getDocument();
+            protectedDocument.getAttachmentList().add(attachment);
+            attachment.setAuthor(xcontext.getUser());
+            // Add the attachment to the document
+            attachment.setDoc(protectedDocument);
+            // not needed with file system attachments anymore
+            // protectedDocument.saveAttachmentContent(attachment, xcontext);
+        } catch (Throwable e) {
+            debug("Filename " + filename + " could not be attached because of Exception: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+   public String getFileName(String filename)
+    {
+        if (filename.startsWith("./")) {
+            filename = filename.substring(2);
+        }
+        XWikiContext xcontext = getXWikiContext();
+        // filename = xcontext.getWiki().clearName(filename, false, true, xcontext);
+        return filename;
+    }
+
+ public addMultipleFiles(newDoc, pathList) {
+     for (path in pathList) {
+        File file = new File(path);
+        byte[] filedata = FileUtils.readFileToByteArray(file);
+        addFile(newDoc, filedata, java.net.URLDecoder.decode(file.getName(),"iso-8859-1"));
+     }
+ }
+
+ public convertFileName(filename) {
+        int index = filename.lastIndexOf("/")
+        
+        return filename.substring(0, index + 1) + java.net.URLEncoder.encode(filename.substring(index + 1), "iso-8859-1").replaceAll("\\+", " ").replaceAll("%28", "(").replaceAll("%29", ")");;
+ }
+
+ public void saveDocumentWithFiles(Document newDoc, Map&lt;String, String&gt; data, List&lt;String&gt; currentLine,
+        int rowIndex, BatchImportConfiguration config, XWikiContext xcontext, boolean overwrite, boolean simulation,
+        boolean overwritefile, boolean fileimport, String datadir, String datadirprefix, ZipFile zipfile,
+        List&lt;DocumentReference&gt; savedDocuments, BatchImportLog log) throws XWikiException, ZipException, IOException
+    {
+        String fullName = newDoc.getPrefixedFullName();
+
+        boolean withFile = false;
+        boolean fileOk = false;
+        List paths = new ArrayList();
+        String path = "";
+
+        // add some data
+        newDoc.use("Blog.BlogPostClass")
+        newDoc.set("published", 1)
+        newDoc.set("hidden", 0)
+
+        // if there is a mapping for the doc.file field
+        String fileMapping = config.getFieldsMapping().get("doc.file");
+        String mappedPath = data.get("doc.file").trim();
+
+System.out.println("In saveDocumentWithFiles " + mappedPath);
+
+        if (fileMapping != null &amp;&amp; !StringUtils.isEmpty(mappedPath)) {
+            withFile = true;
+        
+            if (mappedPath.contains(",")) {
+              fileOk = true;
+              for (mappedItemPath in mappedPath.split(",")) {
+System.out.println("Check file: " + mappedItemPath);
+                  path = getFilePath(datadir, datadirprefix, convertFileName(mappedItemPath));
+                  paths.add(path);
+                  fileOk &amp;= checkFile(zipfile, path)
+System.out.println("Check file: " + path + " "+ fileOk);
+              }
+            } else {
+System.out.println("Check single file: " + mappedPath);
+             path = getFilePath(datadir, datadirprefix, convertFileName(mappedPath));
+             fileOk = checkFile(zipfile, path);
+             paths.add(path);
+           }
+        }
+
+        if (withFile) {
+            if (fileOk) {
+                debug("Ready to import row " + currentLine.toString() + "in page " + fullName
+                    + " and imported file is ok.");
+
+                // if we're simulating we don't actually import the file, we only pretend
+                if (simulation) {
+                    log.logSave("simimportfileok", rowIndex, currentLine, fullName, paths);
+                    savedDocuments.add(newDoc.getDocumentReference());           
+                } else {
+                    addMultipleFiles(newDoc, paths);
+                    // done here, we save pointed files in the file and we're done
+                    newDoc.save();
+                    savedDocuments.add(newDoc.getDocumentReference());
+                    log.logSave("importfiledir", rowIndex, currentLine, fullName, path);
+                } // end if is simulation
+            } else {
+                log.logError("errornofile", rowIndex, currentLine, fullName, paths);
+                // TODO: this will leave the document unsaved because of the inexistent file, which impacts the data set
+                // with the marshalDataToDocumentObjects function (because of the way doImport is written), so maybe
+                // this should be configured by an error handling setting (skip row or skip value, for example), the
+                // same as we should have for document data
+            }
+        } else {
+            debug("Ready to import row " + currentLine.toString() + " in page " + fullName + " (no file attached).");
+
+            // we should save the data
+            if (simulation == false) {
+                newDoc.save();
+                log.logSave("importnofile", rowIndex, currentLine, fullName);
+            } else {
+                log.logSave("simimportnofile", rowIndex, currentLine, fullName);
+            }
+            savedDocuments.add(newDoc.getDocumentReference());
+        }
+    }
+
+    def getAttachmentHeight(datadir, datadirprefix, filename) {
+      try {
+       def path = datadir + datadirprefix + filename
+       def fis = new FileInputStream(new File(path));
+       return getHeight(fis); 
+      } catch (Exception e) {
+       return 0;
+      } 
+    }
+
+    def getHeight(datais) {
+      def imageProc = Utils.getComponent(ImageProcessor.class)
+      return imageProc.readImage(datais).getHeight(null)
+    }
+}
+</content></xwikidoc>
