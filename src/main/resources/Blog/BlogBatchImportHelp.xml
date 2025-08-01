@@ -1,32 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
 <xwikidoc>
-<web>Blog</web>
-<name>BlogBatchImportHelp</name>
-<language></language>
-<defaultLanguage></defaultLanguage>
-<translation>0</translation>
-<parent>Blog.BlogBatchImport</parent>
-<creator>xwiki:XWiki.Admin</creator>
-<author>xwiki:XWiki.Admin</author>
-<customClass></customClass>
-<contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-<creationDate>1388530800000</creationDate>
-<date>1388530800000</date>
-<contentUpdateDate>1388530800000</contentUpdateDate>
-<version>1.1</version>
-<title>How to use Sharepoint Blog Batch Import</title>
-<defaultTemplate></defaultTemplate>
-<validationScript></validationScript>
-<comment></comment>
-<minorEdit>false</minorEdit>
-<syntaxId>xwiki/2.1</syntaxId>
-<hidden>false</hidden><attachment>
-<filename>blogcontent.zip</filename>
-<filesize>114853</filesize>
-<author>xwiki:XWiki.Admin</author>
-<date>1392044284000</date>
-<version>1.1</version>
-<comment></comment><content>UEsDBAoAAAAAAOxUSkQAAAAAAAAAAAAAAAAMABwAYmxvZ2NvbnRlbnQvVVQJAANMnvhSRuP4UnV4
+  <web>Blog</web>
+  <name>BlogBatchImportHelp</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>Blog.BlogBatchImport</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1388530800000</creationDate>
+  <date>1388530800000</date>
+  <contentUpdateDate>1388530800000</contentUpdateDate>
+  <version>1.1</version>
+  <title>How to use Sharepoint Blog Batch Import</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>false</hidden>
+  <attachment>
+    <filename>blogcontent.zip</filename>
+    <filesize>114853</filesize>
+    <author>xwiki:XWiki.Admin</author>
+    <date>1392044284000</date>
+    <version>1.1</version>
+    <comment/>
+    <content>UEsDBAoAAAAAAOxUSkQAAAAAAAAAAAAAAAAMABwAYmxvZ2NvbnRlbnQvVVQJAANMnvhSRuP4UnV4
 CwABBPUBAAAEFAAAAFBLAwQKAAAAAAATV0pEAAAAAAAAAAAAAAAAFwAcAGJsb2djb250ZW50L0Rv
 Y3VtZW50b3MvVVQJAANWovhSRuP4UnV4CwABBPUBAAAEFAAAAFBLAwQUAAAACAAuVUpEeTQWZgCZ
 AACvmwAAJgAcAGJsb2djb250ZW50L0RvY3VtZW50b3MvZWlmZmVsdG93ZXIuanBnVVQJAAPHnvhS
@@ -2041,13 +2063,16 @@ AFBLAQIeAwoAAAAAADNVSkQAAAAAAAAAAAAAAAAYABgAAAAAAAAAEADtQUOaAABibG9nY29udGVu
 dC9MaXN0cy9Gb3Rvcy9VVAUAA9Ke+FJ1eAsAAQT1AQAABBQAAABQSwECHgMUAAAACAAjVUpExZBP
 wFsjAQDWJQEAJwAYAAAAAAAAAAAApIGVmgAAYmxvZ2NvbnRlbnQvTGlzdHMvRm90b3MvZWlmZmVs
 dG93ZXIuanBnVVQFAAOxnvhSdXgLAAEE9QEAAAQUAAAAUEsFBgAAAAAGAAYAPgIAAFG+AQAAAA==
-</content></attachment><attachment>
-<filename>blogimport_dataduplication.png</filename>
-<filesize>169865</filesize>
-<author>xwiki:XWiki.Admin</author>
-<date>1392041848000</date>
-<version>1.1</version>
-<comment></comment><content>iVBORw0KGgoAAAANSUhEUgAABC8AAALeCAYAAACKrzu7AAAYVGlDQ1BJQ0MgUHJvZmlsZQAAWAmt
+</content>
+  </attachment>
+  <attachment>
+    <filename>blogimport_dataduplication.png</filename>
+    <filesize>169865</filesize>
+    <author>xwiki:XWiki.Admin</author>
+    <date>1392041848000</date>
+    <version>1.1</version>
+    <comment/>
+    <content>iVBORw0KGgoAAAANSUhEUgAABC8AAALeCAYAAACKrzu7AAAYVGlDQ1BJQ0MgUHJvZmlsZQAAWAmt
 WXVYVF/zP3eT7u7u7m6Q7rRw6SUWWEIJRVFBQREBQQRUQEnFIAREREQRRUoEAxFQlFJRQCSE31mM
 7/d5n/f973f3ued+7pw5c2fm1JxZAHjpCBERoSgmAMJI0WTnbSZCnl7bhfCjAAGc8KcNcATfqAhj
 R0db8D+v70OQG17P5Cmy/ifbf69g9vOP8gUAcYTVPn5RvmEQ1wGAYfCNIEcDgO2AdNG90REUPAUx
@@ -5028,13 +5053,16 @@ ejYBOi96dvvSOhIgARIgARIgARIgARIgARIgARLo9gTovOj2TUgDSIAESIAESIAESIAESIAESIAE
 SKBnE0isrq7u2RbSOhIgARIgARIgARIgARIgARIgARIggW5NwBOS1K0toPIkQAIkQAIkQAIkQAIk
 QAIkQAIkQAI9mgCXjfTo5qVxJEACJEACJEACJEACJEACJEACJND9CfwfW1wQHz5It68AAAAASUVO
 RK5CYII=
-</content></attachment><attachment>
-<filename>blogimport_directorysettings.png</filename>
-<filesize>106710</filesize>
-<author>xwiki:XWiki.Admin</author>
-<date>1392043000000</date>
-<version>1.1</version>
-<comment></comment><content>iVBORw0KGgoAAAANSUhEUgAAA4kAAAMjCAYAAAAIqVXdAAAYVGlDQ1BJQ0MgUHJvZmlsZQAAWAmt
+</content>
+  </attachment>
+  <attachment>
+    <filename>blogimport_directorysettings.png</filename>
+    <filesize>106710</filesize>
+    <author>xwiki:XWiki.Admin</author>
+    <date>1392043000000</date>
+    <version>1.1</version>
+    <comment/>
+    <content>iVBORw0KGgoAAAANSUhEUgAAA4kAAAMjCAYAAAAIqVXdAAAYVGlDQ1BJQ0MgUHJvZmlsZQAAWAmt
 WXVYVF/zP3eT7u7u7m6Q7rRw6SUWWEIJRVFBQREBQQRUQEnFIAREREQRRUoEAxFQlFJRQCSE31mM
 7/d5n/f973f3ued+7pw5c2fm1JxZAHjpCBERoSgmAMJI0WTnbSZCnl7bhfCjAAGc8KcNcATfqAhj
 R0db8D+v70OQG17P5Cmy/ifbf69g9vOP8gUAcYTVPn5RvmEQ1wGAYfCNIEcDgO2AdNG90REUPAUx
@@ -6907,13 +6935,16 @@ AAIIIIAAApErQJAY5tgRJIYJRTUEEEAAAQQQQAABBBCIaAGCxDCHjyAxTCiqIYAAAggggAACCCCA
 QEQLECSGOXysSQwTimoIIIAAAggggAACCCAQ0QLsbhrRw8fDI4AAAggggAACCCCAAAJDK0CQOLSe
 9IYAAggggAACCCCAAAIIRLQAQWJEDx8PjwACCCCAAAIIIIAAAggMrcD/Aw1wzn75ZstIAAAAAElF
 TkSuQmCC
-</content></attachment><attachment>
-<filename>blogimport_final.png</filename>
-<filesize>343950</filesize>
-<author>xwiki:XWiki.Admin</author>
-<date>1392041848000</date>
-<version>1.1</version>
-<comment></comment><content>iVBORw0KGgoAAAANSUhEUgAABAwAAANdCAYAAAAQlu6qAAAYVGlDQ1BJQ0MgUHJvZmlsZQAAWAmt
+</content>
+  </attachment>
+  <attachment>
+    <filename>blogimport_final.png</filename>
+    <filesize>343950</filesize>
+    <author>xwiki:XWiki.Admin</author>
+    <date>1392041848000</date>
+    <version>1.1</version>
+    <comment/>
+    <content>iVBORw0KGgoAAAANSUhEUgAABAwAAANdCAYAAAAQlu6qAAAYVGlDQ1BJQ0MgUHJvZmlsZQAAWAmt
 WXVYVF/zP3eT7u7u7m6Q7rRw6SUWWEIJRVFBQREBQQRUQEnFIAREREQRRUoEAxFQlFJRQCSE31mM
 7/d5n/f973f3ued+7pw5c2fm1JxZAHjpCBERoSgmAMJI0WTnbSZCnl7bhfCjAAGc8KcNcATfqAhj
 R0db8D+v70OQG17P5Cmy/ifbf69g9vOP8gUAcYTVPn5RvmEQ1wGAYfCNIEcDgO2AdNG90REUPAUx
@@ -12948,13 +12979,16 @@ EiABEiABEiABEiABEiCBgSJAh8FAkaQcEiABEiABEiABEiABEiABEiABEoghAnQYxFBl0hQSIAES
 IAESIAESIAESIAESIAESGCgCdBgMFEnKIQESIAESIAESIAESIAESIAESIIEYIkCHQQxVJk0hARIg
 ARIgARIgARIgARIgARIggYEiQIfBQJGkHBIgARIgARIgARIgARIgARIgARKIIQL/H/2nBB9yt/lP
 AAAAAElFTkSuQmCC
-</content></attachment><attachment>
-<filename>blogimport_preview.png</filename>
-<filesize>178173</filesize>
-<author>xwiki:XWiki.Admin</author>
-<date>1392041847000</date>
-<version>1.1</version>
-<comment></comment><content>iVBORw0KGgoAAAANSUhEUgAABC4AAAPOCAYAAADAzFmqAAAYVGlDQ1BJQ0MgUHJvZmlsZQAAWAmt
+</content>
+  </attachment>
+  <attachment>
+    <filename>blogimport_preview.png</filename>
+    <filesize>178173</filesize>
+    <author>xwiki:XWiki.Admin</author>
+    <date>1392041847000</date>
+    <version>1.1</version>
+    <comment/>
+    <content>iVBORw0KGgoAAAANSUhEUgAABC4AAAPOCAYAAADAzFmqAAAYVGlDQ1BJQ0MgUHJvZmlsZQAAWAmt
 WXVYVF/zP3eT7u7u7m6Q7rRw6SUWWEIJRVFBQREBQQRUQEnFIAREREQRRUoEAxFQlFJRQCSE31mM
 7/d5n/f973f3ued+7pw5c2fm1JxZAHjpCBERoSgmAMJI0WTnbSZCnl7bhfCjAAGc8KcNcATfqAhj
 R0db8D+v70OQG17P5Cmy/ifbf69g9vOP8gUAcYTVPn5RvmEQ1wGAYfCNIEcDgO2AdNG90REUPAUx
@@ -16080,13 +16114,16 @@ BBBAAAEEEEAAAQQQQAABBJJBgMBFMowSbUQAAQQQQAABBBBAAAEEEEAgTQUIXKTpwNNtBBBAAAEE
 EEAAAQQQQAABBJJBgMBFMowSbUQAAQQQQAABBBBAAAEEEEAgTQUIXKTpwNNtBBBAAAEEEEAAAQQQ
 QAABBJJBgMBFMowSbUQAAQQQQAABBBBAAAEEEEAgTQUIXKTpwNNtBBBAAAEEEEAAAQQQQAABBJJB
 gMBFMowSbUQAAQQQQAABBBBAAAEEEEAgTQX+L9jx6e3nfBXxAAAAAElFTkSuQmCC
-</content></attachment><attachment>
-<filename>blogimport_result.png</filename>
-<filesize>1244066</filesize>
-<author>xwiki:XWiki.Admin</author>
-<date>1392041846000</date>
-<version>1.1</version>
-<comment></comment><content>iVBORw0KGgoAAAANSUhEUgAABoEAAAoFCAYAAAAuRBqTAAAgAElEQVR4XuxdB3xUVfb+ZlImvTcg
+</content>
+  </attachment>
+  <attachment>
+    <filename>blogimport_result.png</filename>
+    <filesize>1244066</filesize>
+    <author>xwiki:XWiki.Admin</author>
+    <date>1392041846000</date>
+    <version>1.1</version>
+    <comment/>
+    <content>iVBORw0KGgoAAAANSUhEUgAABoEAAAoFCAYAAAAuRBqTAAAgAElEQVR4XuxdB3xUVfb+ZlImvTcg
 CSV0CB0FpEhRULBgQRex/O29re5a1kXXruvqurv2uquoKFgRkS4gYOgBQg2EBEjvbSYzyf+7b2aS
 STIzTCCQgOf6u06Yee+++7533rn3nu+ec3TwvJzFQ/exFtpOOZufB1hzbf8eys9Mh387ttyF/whg
 3en55U7KkSFs9XLWjqwbWX9mrT0pV/K80XAemsC6zfNT5EhBQBAQBAQBQUAQEAQEAUFAEBAEBAFB
@@ -37912,13 +37949,16 @@ d1Jfqi5Eb30x/LF+Z31og+DkdL7+lWrr2J60WjBwfy2Ixv9EFTlSy9779+J2v9zPTkRnjYI4NrZj
 Uqq9/54LQj/XCDQCjUAj0Ag0Ao1AI9AINAKNQCPQCDQCjUAj8GAgcCkRaIaGyBQntkWcdGkELoVA
 RtWICJMeTIqzTy7V+H3Yzl2z9z6cgh5SI/C9ICAaSGSkaLxLijV+e0VVSWXapRFoBBqBRqARaAQa
 gUagEWgEGoFGoBFoBBqBRuCOI/B/V0u2T30NDk4AAAAASUVORK5CYII=
-</content></attachment><attachment>
-<filename>blogimport_settings.png</filename>
-<filesize>343732</filesize>
-<author>xwiki:XWiki.Admin</author>
-<date>1392041847000</date>
-<version>1.1</version>
-<comment></comment><content>iVBORw0KGgoAAAANSUhEUgAABCkAAAPLCAYAAABy3dNgAAAYVGlDQ1BJQ0MgUHJvZmlsZQAAWAmt
+</content>
+  </attachment>
+  <attachment>
+    <filename>blogimport_settings.png</filename>
+    <filesize>343732</filesize>
+    <author>xwiki:XWiki.Admin</author>
+    <date>1392041847000</date>
+    <version>1.1</version>
+    <comment/>
+    <content>iVBORw0KGgoAAAANSUhEUgAABCkAAAPLCAYAAABy3dNgAAAYVGlDQ1BJQ0MgUHJvZmlsZQAAWAmt
 WXVYVF/zP3eT7u7u7m6Q7rRw6SUWWEIJRVFBQREBQQRUQEnFIAREREQRRUoEAxFQlFJRQCSE31mM
 7/d5n/f973f3ued+7pw5c2fm1JxZAHjpCBERoSgmAMJI0WTnbSZCnl7bhfCjAAGc8KcNcATfqAhj
 R0db8D+v70OQG17P5Cmy/ifbf69g9vOP8gUAcYTVPn5RvmEQ1wGAYfCNIEcDgO2AdNG90REUPAUx
@@ -43949,13 +43989,16 @@ OFALEiABEiABEiABEiABEiABEiABEujzBGik6PNTgABIgARIgARIgARIgARIgARIgARIIDoI0EgR
 HeNALUiABEiABEiABEiABEiABEiABEigzxOgkaLPTwECIAESIAESIAESIAESIAESIAESIIHoIEAj
 RXSMA7UgARIgARIgARIgARIgARIgARIggT5PgEaKPj8FCIAESIAESIAESIAESIAESIAESIAEooPA
 /wO1vEip1UfSMQAAAABJRU5ErkJggg==
-</content></attachment><attachment>
-<filename>blogimport_simulation.png</filename>
-<filesize>350365</filesize>
-<author>xwiki:XWiki.Admin</author>
-<date>1392041849000</date>
-<version>1.1</version>
-<comment></comment><content>iVBORw0KGgoAAAANSUhEUgAABBoAAAM/CAYAAAB/GrFUAAAYVGlDQ1BJQ0MgUHJvZmlsZQAAWAmt
+</content>
+  </attachment>
+  <attachment>
+    <filename>blogimport_simulation.png</filename>
+    <filesize>350365</filesize>
+    <author>xwiki:XWiki.Admin</author>
+    <date>1392041849000</date>
+    <version>1.1</version>
+    <comment/>
+    <content>iVBORw0KGgoAAAANSUhEUgAABBoAAAM/CAYAAAB/GrFUAAAYVGlDQ1BJQ0MgUHJvZmlsZQAAWAmt
 WXVYVF/zP3eT7u7u7m6Q7rRw6SUWWEIJRVFBQREBQQRUQEnFIAREREQRRUoEAxFQlFJRQCSE31mM
 7/d5n/f973f3ued+7pw5c2fm1JxZAHjpCBERoSgmAMJI0WTnbSZCnl7bhfCjAAGc8KcNcATfqAhj
 R0db8D+v70OQG17P5Cmy/ifbf69g9vOP8gUAcYTVPn5RvmEQ1wGAYfCNIEcDgO2AdNG90REUPAUx
@@ -50102,13 +50145,16 @@ EiABEiABEiABEiABEhhSBOhoGFLFQWVIgARIgARIgARIgARIgARIgARIYHgToKNheJcftScBEiAB
 EiABEiABEiABEiABEiCBIUWAjoYhVRxUhgRIgARIgARIgARIgARIgARIgASGNwE6GoZ3+VF7EiAB
 EiABEiABEiABEiABEiABEhhSBOhoGFLFQWVIgARIgARIgARIgARIgARIgARIYHgToKNheJcftScB
 EiABEiABEiABEiABEiABEiCBIUXg/wehCcq2OLJJqQAAAABJRU5ErkJggg==
-</content></attachment><attachment>
-<filename>blogimport_start.png</filename>
-<filesize>90067</filesize>
-<author>xwiki:XWiki.Admin</author>
-<date>1392041847000</date>
-<version>1.1</version>
-<comment></comment><content>iVBORw0KGgoAAAANSUhEUgAAAwAAAAH8CAYAAABmTsjFAAAYVGlDQ1BJQ0MgUHJvZmlsZQAAWAmt
+</content>
+  </attachment>
+  <attachment>
+    <filename>blogimport_start.png</filename>
+    <filesize>90067</filesize>
+    <author>xwiki:XWiki.Admin</author>
+    <date>1392041847000</date>
+    <version>1.1</version>
+    <comment/>
+    <content>iVBORw0KGgoAAAANSUhEUgAAAwAAAAH8CAYAAABmTsjFAAAYVGlDQ1BJQ0MgUHJvZmlsZQAAWAmt
 WXVYVF/zP3eT7u7u7m6Q7rRw6SUWWEIJRVFBQREBQQRUQEnFIAREREQRRUoEAxFQlFJRQCSE31mM
 7/d5n/f973f3ued+7pw5c2fm1JxZAHjpCBERoSgmAMJI0WTnbSZCnl7bhfCjAAGc8KcNcATfqAhj
 R0db8D+v70OQG17P5Cmy/ifbf69g9vOP8gUAcYTVPn5RvmEQ1wGAYfCNIEcDgO2AdNG90REUPAUx
@@ -51689,8 +51735,9 @@ yM9FZ0VABERABERABERABETgsiQgBeCyvK1qlAiIgAiIgAiIgAiIgAjkJyAFID8XnRUBERABERAB
 ERABERCBy5KAFIDL8raqUSIgAiIgAiIgAiIgAiKQn4AUgPxcdFYEREAEREAEREAEREAELksCUgAu
 y9uqRomACIiACIiACIiACIhAfgJSAPJz0VkREAEREAEREAEREAERuCwJ/H82K5kUHel7KQAAAABJ
 RU5ErkJggg==
-</content></attachment>
-<content>This module allows to import Sharepoint Blogs. Follow the steps below to get your content in XWiki's blog application.
+</content>
+  </attachment>
+  <content>This module allows to import Sharepoint Blogs. Follow the steps below to get your content in XWiki's blog application.
 
 {{toc/}}
 
@@ -51830,4 +51877,5 @@ You can see the import result on the [[home page of the Blog&gt;&gt;Blog.WebHome
 
 As you can see the categories are imported (as you can see the number of articles per category) as well as the blog content and images.
 
-[[image:blogimport_result.png||height="1325" width="860"]]</content></xwikidoc>
+[[image:blogimport_result.png||height="1325" width="860"]]</content>
+</xwikidoc>

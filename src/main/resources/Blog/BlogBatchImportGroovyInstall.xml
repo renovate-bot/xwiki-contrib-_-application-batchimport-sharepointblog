@@ -1,27 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
 <xwikidoc>
-<web>Blog</web>
-<name>BlogBatchImportGroovyInstall</name>
-<language></language>
-<defaultLanguage></defaultLanguage>
-<translation>0</translation>
-<parent>Blog.BlogBatchImport</parent>
-<creator>xwiki:XWiki.Admin</creator>
-<author>xwiki:XWiki.Admin</author>
-<customClass></customClass>
-<contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-<creationDate>1388530800000</creationDate>
-<date>1388530800000</date>
-<contentUpdateDate>1388530800000</contentUpdateDate>
-<version>1.1</version>
-<title>Blog Batch Import Groovy Script Installation</title>
-<defaultTemplate></defaultTemplate>
-<validationScript></validationScript>
-<comment></comment>
-<minorEdit>false</minorEdit>
-<syntaxId>xwiki/2.1</syntaxId>
-<hidden>false</hidden>
-<content>
+  <web>Blog</web>
+  <name>BlogBatchImportGroovyInstall</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>Blog.BlogBatchImport</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1388530800000</creationDate>
+  <date>1388530800000</date>
+  <contentUpdateDate>1388530800000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Blog Batch Import Groovy Script Installation</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>false</hidden>
+  <content>
 This page installs the blog batch import script. If the execution works without showing any velocity or groovy error then the install was successful.
 
 {{velocity}}
@@ -44,4 +64,5 @@ println services.batchimport.getBatchImport()
 println services.batchimport
 println com.xpn.xwiki.web.Utils.getComponent(org.xwiki.batchimport.BatchImport.class)
 {{/groovy}}
-</content></xwikidoc>
+</content>
+</xwikidoc>

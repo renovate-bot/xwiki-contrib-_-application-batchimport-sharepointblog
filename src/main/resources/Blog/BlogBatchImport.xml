@@ -1,32 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
 <xwikidoc>
-<web>Blog</web>
-<name>BlogBatchImport</name>
-<language></language>
-<defaultLanguage></defaultLanguage>
-<translation>0</translation>
-<parent>Blog.WebHome</parent>
-<creator>xwiki:XWiki.Admin</creator>
-<author>xwiki:XWiki.Admin</author>
-<customClass></customClass>
-<contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-<creationDate>1388530800000</creationDate>
-<date>1388530800000</date>
-<contentUpdateDate>1388530800000</contentUpdateDate>
-<version>1.1</version>
-<title>Blog Batch Import</title>
-<defaultTemplate></defaultTemplate>
-<validationScript></validationScript>
-<comment></comment>
-<minorEdit>false</minorEdit>
-<syntaxId>xwiki/2.1</syntaxId>
-<hidden>false</hidden><attachment>
-<filename>BlogContent.xls</filename>
-<filesize>9216</filesize>
-<author>xwiki:XWiki.Admin</author>
-<date>1392026056000</date>
-<version>1.1</version>
-<comment></comment><content>0M8R4KGxGuEAAAAAAAAAAAAAAAAAAAAAOwADAP7/CQAGAAAAAAAAAAAAAAABAAAADwAAAAAAAAAA
+  <web>Blog</web>
+  <name>BlogBatchImport</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>Blog.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1388530800000</creationDate>
+  <date>1388530800000</date>
+  <contentUpdateDate>1388530800000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Blog Batch Import</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>false</hidden>
+  <attachment>
+    <filename>BlogContent.xls</filename>
+    <filesize>9216</filesize>
+    <author>xwiki:XWiki.Admin</author>
+    <date>1392026056000</date>
+    <version>1.1</version>
+    <comment/>
+    <content>0M8R4KGxGuEAAAAAAAAAAAAAAAAAAAAAOwADAP7/CQAGAAAAAAAAAAAAAAABAAAADwAAAAAAAAAA
 EAAADAAAAAEAAAD+////AAAAAAAAAAD/////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -188,228 +210,230 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///////////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAP7///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA////////////////AAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/v///wAAAAAAAAAA
-</content></attachment>
-<object>
-<class>
-<name>BatchImport.BatchImportClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<classname>
-<disabled>0</disabled>
-<name>classname</name>
-<number>5</number>
-<picker>0</picker>
-<prettyName>classname</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</classname>
-<datafilename>
-<disabled>0</disabled>
-<name>datafilename</name>
-<number>3</number>
-<picker>0</picker>
-<prettyName>datafilename</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</datafilename>
-<datafileprefix>
-<disabled>0</disabled>
-<name>datafileprefix</name>
-<number>7</number>
-<picker>0</picker>
-<prettyName>datafileprefix</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</datafileprefix>
-<fieldsfortags>
-<disabled>0</disabled>
-<name>fieldsfortags</name>
-<number>9</number>
-<picker>0</picker>
-<prettyName>fieldsfortags</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</fieldsfortags>
-<fileimport>
-<defaultValue></defaultValue>
-<disabled>0</disabled>
-<displayFormType>select</displayFormType>
-<displayType></displayType>
-<name>fileimport</name>
-<number>12</number>
-<prettyName>fileimport</prettyName>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-</fileimport>
-<fileupload>
-<defaultValue></defaultValue>
-<disabled>0</disabled>
-<displayFormType>select</displayFormType>
-<displayType></displayType>
-<name>fileupload</name>
-<number>11</number>
-<prettyName>fileupload</prettyName>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-</fileupload>
-<listseparator>
-<disabled>0</disabled>
-<name>listseparator</name>
-<number>10</number>
-<picker>0</picker>
-<prettyName>List Separator</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</listseparator>
-<mapping>
-<disabled>0</disabled>
-<editor>Text</editor>
-<name>mapping</name>
-<number>1</number>
-<picker>0</picker>
-<prettyName>mapping</prettyName>
-<rows>15</rows>
-<size>80</size>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-</mapping>
-<metadatafilename>
-<disabled>0</disabled>
-<name>metadatafilename</name>
-<number>2</number>
-<picker>0</picker>
-<prettyName>metadatafilename</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</metadatafilename>
-<pageprefix>
-<disabled>0</disabled>
-<name>pageprefix</name>
-<number>8</number>
-<picker>0</picker>
-<prettyName>pageprefix</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</pageprefix>
-<space>
-<disabled>0</disabled>
-<name>space</name>
-<number>6</number>
-<picker>0</picker>
-<prettyName>space</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</space>
-</class>
-<name>Blog.BlogBatchImport</name>
-<number>0</number>
-<className>BatchImport.BatchImportClass</className>
-<guid>5c51a71c-3ef2-4fdb-b880-6f0abcd494bc</guid>
-<property>
-<classname>Blog.BlogPostClass</classname>
-</property>
-<property>
-<datafilename>/Users/ludovic/dev/clients/energisa/blogexport/blogcontent/</datafilename>
-</property>
-<property>
-<datafileprefix></datafileprefix>
-</property>
-<property>
-<fieldsfortags></fieldsfortags>
-</property>
-<property>
-<fileimport></fileimport>
-</property>
-<property>
-<fileupload>1</fileupload>
-</property>
-<property>
-<listseparator>,</listseparator>
-</property>
-<property>
-<mapping>Corpo=content
+</content>
+  </attachment>
+  <object>
+    <class>
+      <name>BatchImport.BatchImportClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <classname>
+        <disabled>0</disabled>
+        <name>classname</name>
+        <number>5</number>
+        <picker>0</picker>
+        <prettyName>classname</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </classname>
+      <datafilename>
+        <disabled>0</disabled>
+        <name>datafilename</name>
+        <number>3</number>
+        <picker>0</picker>
+        <prettyName>datafilename</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </datafilename>
+      <datafileprefix>
+        <disabled>0</disabled>
+        <name>datafileprefix</name>
+        <number>7</number>
+        <picker>0</picker>
+        <prettyName>datafileprefix</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </datafileprefix>
+      <fieldsfortags>
+        <disabled>0</disabled>
+        <name>fieldsfortags</name>
+        <number>9</number>
+        <picker>0</picker>
+        <prettyName>fieldsfortags</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </fieldsfortags>
+      <fileimport>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType/>
+        <name>fileimport</name>
+        <number>12</number>
+        <prettyName>fileimport</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </fileimport>
+      <fileupload>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType/>
+        <name>fileupload</name>
+        <number>11</number>
+        <prettyName>fileupload</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </fileupload>
+      <listseparator>
+        <disabled>0</disabled>
+        <name>listseparator</name>
+        <number>10</number>
+        <picker>0</picker>
+        <prettyName>List Separator</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </listseparator>
+      <mapping>
+        <disabled>0</disabled>
+        <editor>Text</editor>
+        <name>mapping</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>mapping</prettyName>
+        <rows>15</rows>
+        <size>80</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </mapping>
+      <metadatafilename>
+        <disabled>0</disabled>
+        <name>metadatafilename</name>
+        <number>2</number>
+        <picker>0</picker>
+        <prettyName>metadatafilename</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </metadatafilename>
+      <pageprefix>
+        <disabled>0</disabled>
+        <name>pageprefix</name>
+        <number>8</number>
+        <picker>0</picker>
+        <prettyName>pageprefix</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </pageprefix>
+      <space>
+        <disabled>0</disabled>
+        <name>space</name>
+        <number>6</number>
+        <picker>0</picker>
+        <prettyName>space</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </space>
+    </class>
+    <name>Blog.BlogBatchImport</name>
+    <number>0</number>
+    <className>BatchImport.BatchImportClass</className>
+    <guid>5c51a71c-3ef2-4fdb-b880-6f0abcd494bc</guid>
+    <property>
+      <classname>Blog.BlogPostClass</classname>
+    </property>
+    <property>
+      <datafilename>/Users/ludovic/dev/clients/energisa/blogexport/blogcontent/</datafilename>
+    </property>
+    <property>
+      <datafileprefix/>
+    </property>
+    <property>
+      <fieldsfortags/>
+    </property>
+    <property>
+      <fileimport/>
+    </property>
+    <property>
+      <fileupload>1</fileupload>
+    </property>
+    <property>
+      <listseparator>,</listseparator>
+    </property>
+    <property>
+      <mapping>Corpo=content
 Título=title
 Categoria=category
 Título=doc.name
 FILES=doc.file
 Publicada=publishDate</mapping>
-</property>
-<property>
-<metadatafilename>BlogContent.xls</metadatafilename>
-</property>
-<property>
-<pageprefix></pageprefix>
-</property>
-<property>
-<space>Blog</space>
-</property>
-</object>
-<object>
-<class>
-<name>XWiki.DocumentSheetBinding</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<sheet>
-<customDisplay></customDisplay>
-<disabled>0</disabled>
-<name>sheet</name>
-<number>1</number>
-<picker>0</picker>
-<prettyName>Sheet</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</sheet>
-</class>
-<name>Blog.BlogBatchImport</name>
-<number>0</number>
-<className>XWiki.DocumentSheetBinding</className>
-<guid>c0d19ce9-aa8f-46e4-b683-d4af6a57d7da</guid>
-<property>
-<sheet>Blog.BlogBatchImportSheet</sheet>
-</property>
-</object>
-<content>
-This is the home of the blog batch import. Before using this tool, please visit [[BlogBatchImportHelp]] to install the tool properly and follow the instructions on how to use the tool.</content></xwikidoc>
+    </property>
+    <property>
+      <metadatafilename>BlogContent.xls</metadatafilename>
+    </property>
+    <property>
+      <pageprefix/>
+    </property>
+    <property>
+      <space>Blog</space>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>XWiki.DocumentSheetBinding</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <sheet>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>sheet</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>Sheet</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </sheet>
+    </class>
+    <name>Blog.BlogBatchImport</name>
+    <number>0</number>
+    <className>XWiki.DocumentSheetBinding</className>
+    <guid>c0d19ce9-aa8f-46e4-b683-d4af6a57d7da</guid>
+    <property>
+      <sheet>Blog.BlogBatchImportSheet</sheet>
+    </property>
+  </object>
+  <content>
+This is the home of the blog batch import. Before using this tool, please visit [[BlogBatchImportHelp]] to install the tool properly and follow the instructions on how to use the tool.</content>
+</xwikidoc>
