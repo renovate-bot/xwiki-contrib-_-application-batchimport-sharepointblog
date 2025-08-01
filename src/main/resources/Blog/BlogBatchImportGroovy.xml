@@ -68,7 +68,7 @@ import java.util.zip.ZipException;
 import org.xwiki.officeimporter.OfficeImporterException;
 import org.xwiki.officeimporter.OfficeImporterVelocityBridge;
 import org.xwiki.officeimporter.document.XDOMOfficeDocument;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import com.xpn.xwiki.plugin.image.ImageProcessor;
 import java.io.*;
 import com.xpn.xwiki.objects.*;
